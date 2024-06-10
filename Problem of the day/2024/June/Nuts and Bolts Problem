@@ -1,0 +1,104 @@
+Problem Statement :
+Nuts and Bolts Problem
+
+Given a set of n nuts & bolts. There is a one-on-one mapping between nuts and bolts. 
+You have to Match nuts and bolts efficiently. Comparison of a nut to another nut or a bolt 
+to another bolt is not allowed. It means the nut can only be compared with the bolt and the
+bolt can only be compared with the nut to see which one is bigger/smaller.
+The elements should follow the following order: { !,#,$,%,&,*,?,@,^ }
+
+Note: Make all the required changes directly in the given arrays, output will be handled by the driver code.
+
+Examples
+
+Input: n = 5, nuts[] = {@, %, $, #, ^}, bolts[] = {%, @, #, $ ^}
+
+Output: 
+# $ % @ ^
+# $ % @ ^
+
+Explanation: As per the order # should come first after that $ then % then @ and ^. 
+
+
+Input: n = 9, nuts[] = {^, &, %, @, #, *, $, ?, !}, bolts[] = {?, #, @, %, &, *, $ ,^, !}
+
+Output: 
+! # $ % & * ? @ ^
+! # $ % & * ? @ ^
+
+Explanation: We'll have to match first ! then  # , $,  %,  &,  *,  @,  ^,  ? as per the required ordering.
+
+
+Expected Time Complexity: O(n(logn))
+Expected Auxiliary Space: O(log(n))
+
+Constraints:
+1 <= n <= 9
+The arrays 'nuts' and 'bolts' can only consist of the following elements: {'@', '#', '$', '%', '^', '&', '?', '*', '!'}.
+All the elements of arrays 'nuts' and 'bolts' should be unique.
+
+Topic Tags : Array, Hash and Data Structures
+Level : Medium
+Company Tags : Amazon, Hike, MakeMyTrip, MAQ Software and Adobe
+
+++++++++++++++++++++++++++++++++++++
+#start code
+
+class Solution {
+    
+    private final char[] ORDER = { '!', '#', '$', '%', '&', '*', '?', '@', '^' };
+    
+    void matchPairs(int n, char nuts[], char bolts[]) {
+        
+          quickSort(nuts, bolts, 0, n-1);
+    }
+    
+    private void quickSort(char[] nuts, char[] bolts, int low, int high){
+         
+          if(low < high){
+              
+               int pivotIndex = partition(nuts, low, high, bolts[high]);
+               
+               partition(bolts, low, high, nuts[pivotIndex]);
+               
+               quickSort(nuts, bolts, low, pivotIndex - 1);
+               quickSort(nuts, bolts, pivotIndex + 1, high);
+          }
+          
+    }
+    
+    private int partition(char[] array, int low, int high, char pivot){
+          int i = low;
+          for(int j = low; j<high; j++){
+               if(compare(array[j], pivot) < 0){
+                    swap(array, i, j);
+                    i++;
+               }else if(compare(array[j], pivot) == 0){
+                    swap(array, j, high);
+                    j--;
+               }
+          }
+          swap(array, i, high);
+          return i;
+    }
+    
+    private void swap(char[] array, int i , int j){
+          char temp = array[i];
+          array[i] = array[j];
+          array[j] = temp;
+    }
+    
+    private int compare(char a, char b){
+         int indexA = -1 , indexB = -1;
+         
+         for(int i = 0; i<ORDER.length; i++){
+               if(ORDER[i] == a) indexA = i;
+               if(ORDER[i] == b) indexB = i;
+         }
+         
+         return indexA - indexB;
+    }
+}
+
+#end code
++++++++++++++++++++++++++++++++++++++++++++++++++
