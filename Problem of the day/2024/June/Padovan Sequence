@@ -1,0 +1,57 @@
+Problem Statement : 
+Padovan Sequence
+
+Given a number n, find the nth number in the Padovan Sequence.
+
+A Padovan Sequence is a sequence which is represented by the following recurrence relation
+P(n) = P(n-2) + P(n-3)
+P(0) = P(1) = P(2) = 1
+
+Note: Since the output may be too large, compute the answer modulo 10^9+7.
+
+Examples :
+
+Input: n = 3
+Output: 2
+Explanation: We already know, P1 + P0 = P3 and P1 = 1 and P0 = 1
+Input: n = 4
+Output: 2
+Explanation: We already know, P4  = P2 + P1 and P2 = 1 and P1 = 1
+Expected Time Complexity: O(n)
+Expected Auxiliary Space: O(1)
+
+Topic Tags : Dynamic programming, series, modular arithmatic and algorithms
+Level : Easy 
+
+++++++++++++++++++++++++++++++++++
+#start code
+
+class Solution
+{
+    
+  private final int MOD = 1000000007;
+  
+  public int padovanSequence(int n)
+    {
+        
+         if(n==0 || n==1 || n==2){
+             return 1;
+         }
+         
+         int p0 = 1, p1 = 1, p2 = 1;
+         int pN = 0;
+         
+         for(int i = 3; i<=n; i++){
+              pN = (p0 + p1) % MOD;
+              p0 = p1;
+              p1 = p2;
+              p2 = pN;
+         }
+         
+         return pN;
+    }
+    
+}
+
+#end code
++++++++++++++++++++++++++++++++++++++++++++++
