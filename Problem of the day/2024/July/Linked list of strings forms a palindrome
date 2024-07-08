@@ -1,0 +1,64 @@
+Problem statement : 
+
+Given a linked list with string data, check whether the combined string formed is palindrome. 
+If the combined string is palindrome then return true otherwise return false.
+
+Example:
+
+Input:
+
+Output : true
+Explanation: As string "abcddcba" is palindrome the function should return true.
+
+Input:
+
+Output : false
+Explanation: As string "abcdba" is not palindrome the function should return false.
+
+Expected Time Complexity:  O(n)
+Expected Auxiliary Space: O(n)
+
+Constraints:
+1 <= Node.data.length<= 103
+1<=list.length<=103
+
+++++++++++++++++++++++++++++++++++++++++++++++
+#start code 
+
+class Solution {
+    public boolean compute(Node root) {
+        
+        /* There are two steps : 
+        1. Combine all string data from the linked list into a single string.
+        2. Check if the combined string is a palindrome . */
+        
+        //1. 
+        
+        StringBuilder combinedString = new StringBuilder();
+        Node current = root; 
+        while(current != null){
+             combinedString.append(current.data);
+             current = current.next;
+        }
+        
+        //2.
+        
+        String str = combinedString.toString();
+        int left = 0;
+        int right = str.length() - 1;
+        
+        while(left < right){
+             
+             if(str.charAt(left) != str.charAt(right)){
+                 return false;
+             }
+             left++;
+             right--;
+        }
+        
+        return true;
+    }
+}
+
+#end code
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
