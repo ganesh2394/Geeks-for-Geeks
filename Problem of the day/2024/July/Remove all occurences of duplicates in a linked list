@@ -1,0 +1,67 @@
+Problem statement 
+
+Given a sorted linked list, delete all nodes that have duplicate numbers (all occurrences), leaving only numbers that appear once in the original list, and return the head of the modified linked list. 
+
+Examples:
+
+Input: Linked List = 23->28->28->35->49->49->53->53
+Output: 23 35
+Explanation: 
+
+The duplicate numbers are 28, 49 and 53 which are removed from the list.
+
+Input: Linked List = 11->11->11->11->75->75
+Output: Empty list
+Explanation: 
+
+All the nodes in the linked list have duplicates. Hence the resultant list would be empty.
+
+Expected Time Complexity: O(n)
+Expected Auxiliary Space: O(1)
+
+Constraints:
+list.data>0
+1 ≤ size(list) ≤ 105
+
+Level : Medium
+company tags : Microsoft
+topic tags : Linked List and Data Structures
+
+----------------------------------------------------------
+#start code 
+
+class Solution {
+    public Node removeAllDuplicates(Node head) {
+        
+         if(head == null) return null;
+         
+         Node dummy = new Node(0);
+         dummy.next = head;
+         Node prev = dummy;
+         Node current = head;
+         
+         while(current != null){
+             
+              boolean isDuplicate = false;
+              
+              while(current.next != null && current.data == current.next.data){
+                   current = current.next;
+                   isDuplicate = true;
+              }
+              
+              if(isDuplicate){
+                   prev.next = current.next;
+              }
+              else{
+                   prev = prev.next;
+              }
+              
+              current = current.next;
+         }
+         
+         return dummy.next;
+    }
+}
+
+#end code
+-------------------------------------------------------------------------------------
