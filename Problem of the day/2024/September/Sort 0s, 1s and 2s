@@ -1,0 +1,145 @@
+Problem statement : Sort 0s, 1s and 2s
+
+Given an array arr containing only 0s, 1s, and 2s. Sort the array in ascending order.
+
+Examples:
+
+Input: arr[]= [0, 2, 1, 2, 0]
+Output: 0 0 1 2 2
+Explanation: 0s 1s and 2s are segregated into ascending order.
+
+Input: arr[] = [0, 1, 0]
+Output: 0 0 1
+Explanation: 0s 1s and 2s are segregated into ascending order.
+
+Expected Time Complexity: O(n)
+Expected Auxiliary Space: O(1)
+
+Constraints:
+1 <= arr.size() <= 106
+0 <= arr[i] <= 2
+
+Level : Easy
+topic tags : Array, sorting, data structure and algorithm
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#start code
+
+class Solution {
+    // Function to sort an array of 0s, 1s, and 2s
+    public void sort012(ArrayList<Integer> arr) {
+        
+          int low = 0;
+          int mid = 0;
+          int high = arr.size() - 1;
+          
+          while(mid <= high){
+              
+              switch(arr.get(mid)){
+                  
+                    case 0 :
+                        swap(arr, low, mid);
+                        low++;
+                        mid++;
+                        break;
+                        
+                    case 1 :
+                        mid++;
+                        break;
+                        
+                    case 2 :
+                        swap(arr, mid, high);
+                        high--;
+                        break;
+              }
+          }
+    }
+    
+    public static void swap(ArrayList<Integer> arr, int i, int j){
+          int temp = arr.get(i);
+          arr.set(i, arr.get(j));
+          arr.set(j, temp);
+    }
+}
+
+#end code
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Example:
+-------
+Given array:
+arr = [0, 2, 1, 2, 0]
+
+The goal is to sort the array in ascending order using only one traversal. The algorithm maintains three pointers:
+
+low to keep track of where the next 0 should go.
+mid to traverse the array and handle each element.
+high to keep track of where the next 2 should go.
+
+Initial State:
+low = 0, mid = 0, high = arr.length - 1 = 4
+Array: [0, 2, 1, 2, 0]
+
+
+Step 1: Process arr[mid] = 0 (mid = 0)
+---------------------------------------
+The element at mid is 0. We swap it with the element at low.
+Increment low and mid by 1.
+New state:
+
+low = 1, mid = 1, high = 4
+Array after swap: [0, 2, 1, 2, 0] (No change since arr[mid] is already 0.)
+
+
+Step 2: Process arr[mid] = 2 (mid = 1)
+--------------------------------------
+The element at mid is 2. We swap it with the element at high.
+Decrement high by 1. Do not increment mid because we need to re-check the new element at mid.
+New state:
+
+low = 1, mid = 1, high = 3
+Array after swap: [0, 0, 1, 2, 2] (Swapped arr[1] with arr[4].)
+
+
+Step 3: Process arr[mid] = 0 (mid = 1)
+--------------------------------------
+The element at mid is 0. We swap it with the element at low.
+Increment both low and mid by 1.
+New state:
+
+low = 2, mid = 2, high = 3
+Array after swap: [0, 0, 1, 2, 2] (Swapped arr[1] with arr[1] so no visual change.)
+
+
+Step 4: Process arr[mid] = 1 (mid = 2)
+--------------------------------------
+The element at mid is 1. Since it is already in the correct place, just increment mid.
+New state:
+
+low = 2, mid = 3, high = 3
+Array remains unchanged: [0, 0, 1, 2, 2]
+
+
+Step 5: Process arr[mid] = 2 (mid = 3)
+--------------------------------------
+The element at mid is 2. We swap it with the element at high.
+Decrement high by 1.
+New state:
+
+low = 2, mid = 3, high = 2
+Array after swap: [0, 0, 1, 2, 2] (No visual change as arr[mid] is already 2.)
+Since mid is now greater than high, the process stops.
+
+Final Sorted Array:
+[0, 0, 1, 2, 2]
+
+Summary of Steps:
+----------------
+Processing 0: Swap it with low and increment both low and mid.
+Processing 1: Just move mid to the next element.
+Processing 2: Swap it with high and decrement high.
+The algorithm ensures that by the end of the process:
+
+All 0s are on the left,
+All 1s are in the middle,
+All 2s are on the right.
+
